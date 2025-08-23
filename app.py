@@ -33,7 +33,7 @@ def executaCalculo(valor1, valor2, operacao):
             resultado = funcoes['executar'](int(valor1), int(valor2))
             operacaoString = funcoes['operadorString']
             return {
-                'calculo' : resultado,
+                'resposta' : resultado,
                 'calculoString' : f'{valor1} {operacaoString} {valor2} = {resultado}'
             }
     return {
