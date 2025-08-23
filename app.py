@@ -1,24 +1,21 @@
 from flask import Flask, request
 import operator
+import re
 
 app = Flask(__name__)
 
 operacoes = {
-    #soma
-    '+' : operator.add,
-    #subtração
-    '-' : operator.sub,
-    #multiplicação
-    '*' : operator.mul,
-    'x' : operator.mul,
-    '·' : operator.mul,
-    #divisão
-    '/' : operator.truediv,
-    ':' : operator.truediv,
-    '÷' : operator.truediv
+    # soma
+    r"^(?:\+|soma|sum)$": {'executar' : operator.add, 'operadorString' : '+'},
+    # subtração
+    r"^(?:\-|subtracao|sub)$": {'executar' : operator.sub, 'operadorString' : '-'},
+    # multiplicação
+    r"^(?:\*|x|·|multiplicacao|mul)$": {'executar' : operator.mul, 'operadorString' : 'x'},
+    # divisão
+    r"^(?:/|:|÷|divisao|div)$": {'executar' : operator.truediv, 'operadorString' : '/'}
 }
 
-def get_all_params():
+def todosParamtros():
     params = {}
     params.update(request.args.to_dict())
     params.update(request.form.to_dict())
@@ -31,14 +28,23 @@ def get_all_params():
     return params
 
 def executaCalculo(valor1, valor2, operacao):
+    for pattern, funcoes in operacoes.items():
+        if re.match(pattern, operacao):
+            resultado = funcoes['executar'](int(valor1), int(valor2))
+            operacaoString = funcoes['operadorString']
+            return {
+                'calculo' : resultado,
+                'calculoString' : f'{valor1} {operacaoString} {valor2} = {resultado}'
+            }
     return {
-        'calculo' : operacoes[operacao](valor1, valor2),
+        'calculo' : 'Operador Inválido',
         'calculoString' : f'{valor1} {operacao} {valor2}'
     }
+    
 
 @app.route("/")
 def hello():
-    parametros = get_all_params()
+    parametros = todosParamtros()
     return executaCalculo(parametros['valor1'], parametros['valor2'], parametros['operacao'])
 
 if __name__ == "__main__":
