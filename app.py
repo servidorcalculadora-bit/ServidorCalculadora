@@ -37,7 +37,7 @@ def executaCalculo(valor1, valor2, operacao):
                 'calculoString' : f'{valor1} {operacaoString} {valor2} = {resultado}'
             }
     return {
-        'calculo' : 'Operador Inválido',
+        'resposta' : 'Operador Inválido',
         'calculoString' : f'{valor1} {operacao} {valor2}'
     }
     
