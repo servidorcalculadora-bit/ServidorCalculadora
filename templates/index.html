@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" 
+        href="{{ url_for('static', filename='css/atom-one-dark.min.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/' + img) }}">
+    <script src="{{ url_for('static', filename='js/highlight.min.js') }}"></script>
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 16px;
+        }
+        code {
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exemplo de Request em JavaScript</h1>
+    <pre><code class="language-js">{{ codigo }}</code></pre>
+</body>
+</html>
