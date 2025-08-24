@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template
+from flasgger import Swagger
+from flask_cors import CORS
 import operator
 import re
-from flasgger import Swagger
+
 
 app = Flask(__name__)
+CORS(app)
 swagger = Swagger(app)
 operacoes = {
     r"^(?:\+|soma|sum)$": {'executar': operator.add, 'operadorString': '+'},
