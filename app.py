@@ -59,13 +59,32 @@ def exemploJs():
     dominio = request.host_url
 
     codigo_js = f'''
-fetch("{dominio}calculadora", {{
-    method: "POST",
-    headers: {{"Content-Type": "application/json"}},
-    body: JSON.stringify({{valor1: 10, valor2: 5, operacao: "+"}})
-}})
-.then(res => res.json())
-.then(console.log);
+
+//GET
+fetch('{dominio}?valor1=1&valor2=10&operacao=soma', {{
+        method: 'GET'
+    }})
+    .then((response) => response.json())
+    .then((responseData) => {{
+        console.log(responseData);
+    }})
+
+//POST
+fetch('{dominio}', {{
+        method: 'POST',
+        headers: new Headers({{
+            'Content-Type': 'application/json'
+        }}),
+        body: JSON.stringify({{
+            valor1: 1,
+            valor2: 10,
+            operacao: '+'
+        }})
+    }})
+    .then((response) => response.json())
+    .then((responseData) => {{
+        console.log(responseData);
+    }})
     '''
     return render_template("index.html", titulo='JS(Puro)', codigo=codigo_js, img='js-icon.png')
 
@@ -75,7 +94,7 @@ def exemploJsJquery():
     
     codigo_jquery = f'''
 $.ajax({{
-    url: "{dominio}calculadora",
+    url: "{dominio}",
     method: "POST",
     contentType: "application/json",
     data: JSON.stringify({{ valor1: 10, valor2: 5, operacao: "+" }}),
@@ -98,7 +117,7 @@ def exemploJava():
     public class CalculadoraRequest {{
         public static void main(String[] args) {{
             try {{
-                URL url = new URL("{dominio}calculadora");
+                URL url = new URL("{dominio}");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
