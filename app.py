@@ -122,7 +122,7 @@ def exemploJava():
     '''
     return render_template("index.html", titulo='JS(Puro)', codigo=codigo_java, img='javaIcon.jpg')
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['GET', 'POST'])
 def hello():
     """
     Calculo Simples
